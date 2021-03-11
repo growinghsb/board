@@ -1,6 +1,6 @@
-package repository;
+package winfly.borad_2.repository;
 
-import domain.Contents;
+import winfly.borad_2.domain.Contents;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

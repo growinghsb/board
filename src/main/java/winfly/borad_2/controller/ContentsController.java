@@ -1,4 +1,4 @@
-package controller;
+package winfly.borad_2.controller;
 
 
 import lombok.RequiredArgsConstructor;

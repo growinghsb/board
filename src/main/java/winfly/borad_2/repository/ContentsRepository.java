@@ -1,7 +1,7 @@
-package repository;
+package winfly.borad_2.repository;
 
 
-import domain.Contents;
+import winfly.borad_2.domain.Contents;
 
 import java.util.List;
 

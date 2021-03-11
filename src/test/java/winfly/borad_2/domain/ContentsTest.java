@@ -1,19 +1,11 @@
-package domain;
+package winfly.borad_2.domain;
 
-import controller.dto.ContentsDto;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.swing.text.html.parser.Entity;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import winfly.borad_2.controller.dto.ContentsDto;
 
 import static java.time.LocalDateTime.*;
 import static java.time.format.DateTimeFormatter.*;
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Entity 내부에 있는 비즈니스 메서드 테스트
@@ -34,7 +26,7 @@ class ContentsTest {
     public void contents_수정_테스트() {
         //given (~ 가정했을 때)
         Contents contents = createContent();
-        ContentsDto dto = new ContentsDto("바뀐 한승범", "바뀐 테스트 글", "바뀐 테스트 테스트 테스트", now().format(ofPattern("yyyy-MM-dd HH:mm:ss")));
+        ContentsDto dto = new ContentsDto("바뀐 한승범", "바뀐 테스트 글", "바뀐 테스트 테스트 테스트");
 
         //when (~ 할 때), then (그렇다면)
         Contents.revise(contents, dto);
@@ -56,7 +48,7 @@ class ContentsTest {
     }
 
     private Contents createContent() {
-        ContentsDto dto = new ContentsDto("한승범", "테스트 글", "이건 테스트 테스트 테스트", now().format(ofPattern("yyyy-MM-dd HH:mm:ss")));
+        ContentsDto dto = new ContentsDto("한승범", "테스트 글", "이건 테스트 테스트 테스트");
         Contents contents = Contents.createContents(dto);
         return contents;
     }

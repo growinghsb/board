@@ -1,12 +1,13 @@
-package domain;
+package winfly.borad_2.domain;
 
-import controller.dto.ContentsDto;
-import lombok.AccessLevel;
+import winfly.borad_2.controller.dto.ContentsDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+import static java.time.LocalDateTime.now;
+import static java.time.format.DateTimeFormatter.ofPattern;
 import static javax.persistence.GenerationType.*;
 import static lombok.AccessLevel.*;
 
@@ -47,7 +48,7 @@ public class Contents {
         contents.writer = dto.getWriter();
         contents.title = dto.getTitle();
         contents.contents = dto.getContents();
-        contents.writeTime = dto.getTime();
+        contents.writeTime = currentTime();
         contents.modifyTime = "";
         contents.views = 0;
 
@@ -58,10 +59,14 @@ public class Contents {
         contents.writer = dto.getWriter();
         contents.title = dto.getTitle();
         contents.contents = dto.getContents();
-        contents.modifyTime = dto.getTime();
+        contents.modifyTime = currentTime();
     }
 
     public static void viewsUp(Contents contents) {
         contents.views = contents.getViews() + 1;
+    }
+
+    private static String currentTime() {
+        return now().format(ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 }
