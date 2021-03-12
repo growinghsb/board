@@ -3,4 +3,5 @@
 * 게시판 페이징 기능
 * 작성자 검색 및 제목 검색
 * 테스트 코드 작성
-* 리팩토링 시 느꼈던 점 반영 
+* 리팩토링 시 느꼈던 점 반영[board_1 리팩토링 시 느꼈던 점](https://github.com/growinghsb/board_1_refactoring)   
+
