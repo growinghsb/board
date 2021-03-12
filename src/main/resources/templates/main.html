@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>메인 화면</title>
+    <style type="text/css">
+        .tg {
+            border-collapse: collapse;
+            border-spacing: 0;
+            margin: 0px auto;
+        }
+
+        .tg td {
+            border-color: black;
+            border-style: solid;
+            border-width: 1px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            overflow: hidden;
+            padding: 10px 6px;
+            word-break: normal;
+        }
+
+        .tg th {
+            border-color: black;
+            border-style: solid;
+            border-width: 1px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            font-weight: normal;
+            overflow: hidden;
+            padding: 10px 6px;
+            word-break: normal;
+        }
+
+        .tg .tg-9wq8 {
+            border-color: inherit;
+            text-align: center;
+            vertical-align: middle
+        }
+
+        .tg .tg-c3ow {
+            border-color: inherit;
+            text-align: center;
+            vertical-align: top
+        }
+
+        .tg .tg-0pky {
+            border-color: inherit;
+            text-align: left;
+            vertical-align: top
+        }
+
+        div {
+            margin: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<table class="tg">
+    <thead>
+    <tr>
+        <th class="tg-9wq8">#</th>
+        <th class="tg-0pky">작성자</th>
+        <th class="tg-9wq8">제목</th>
+        <th class="tg-0pky">내용</th>
+        <th class="tg-9wq8">조회수</th>
+        <th class="tg-9wq8">작성시간</th>
+        <th class="tg-0pky">수정시간</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="content : ${contents}">
+        <td class="tg-c3ow" th:text="${content.getId()}"></td>
+        <td class="tg-0pky" th:text="${content.getWriter()}"></td>
+        <td class="tg-c3ow">
+            <a href="#" th:href="@{/detail/(id=${content.getId()})}" th:text="${content.getTitle()}"></a>
+        </td>
+        <td class="tg-0pky">
+            <a href="#" th:href="@{/detail/(id=${content.getId()})}" th:text="${content.getContents()}"></a>
+        </td>
+        <td class="tg-c3ow" th:text="${content.getViews()}"></td>
+        <td class="tg-0pky" th:text="${content.getWriteTime()}"></td>
+        <td class="tg-c3ow" th:text="${content.getModifyTime()}"></td>
+        <td class="tg-c3ow">
+            <a href="#" th:href="@{/delete/(id=${content.getId()})}">삭제</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div>
+    <a href="/write" role="button">글쓰기</a>
+</div>
+</body>
+</html>

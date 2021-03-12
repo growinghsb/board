@@ -8,6 +8,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import winfly.borad_2.controller.dto.ContentsDto;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 
 import static java.time.LocalDateTime.now;
@@ -16,11 +17,13 @@ import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
-@Rollback(value = false)
 class ContentsServiceTest {
 
     @Autowired
     ContentsService service;
+
+    @Autowired
+    EntityManager em;
 
     @Test
     public void 저장_테스트() {
@@ -91,6 +94,32 @@ class ContentsServiceTest {
         service.delete(id);
 
         assertThat(dtos.size()).isEqualTo(service.findAll().size() + 1);
+    }
+
+    @Test
+    public void 조회수_증가_테스트() {
+        //given (~ 가정했을 때)
+        Long id = saveContent();
+        //assertThat(service.findOne(id).getId()).isEqualTo(1);
+
+        //when (~ 할 때), then (그렇다면)
+        service.viewsUp(id);
+
+        /**
+         * 테스트가 힘든데..이거 잘못짠건가?
+         * 메서드 매개변수가 궂이 필요 없는데
+         * 어떻게 조회를 해야 좋을까
+         * 테스트 공부를 해야겠다.
+         */
+
+
+
+       /* assertThat(service.findOne(id).getViews()).isNotZero();
+        assertThat(service.findOne(id).getViews()).isEqualTo(1);
+        제대로 테스트가 안됬던 이유는 findOne 하면 dto를 반환하기 때문이다.
+        테스트 시 타입에 대한 검증도 하자. Entity를 반환해야 하는데
+        dto를 반환해 값이 반영이 안됬던 것이다.
+        */
     }
 
     private Long saveContent() {

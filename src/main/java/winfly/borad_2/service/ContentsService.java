@@ -10,6 +10,12 @@ import winfly.borad_2.repository.ContentsRepository;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Service class도 interface를 통해서 test나 controller가
+ * 추상화를 바라볼 수 있도록 하는게 사이드이펙트를 줄이는데
+ * 도움이 될 거 같다.
+ */
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -49,7 +55,9 @@ public class ContentsService {
         repository.delete(repository.findOne(id));
     }
 
-
+    public void viewsUp(Long id) {
+        Contents.viewsUp(repository.findOne(id));
+    }
 }
 
 
