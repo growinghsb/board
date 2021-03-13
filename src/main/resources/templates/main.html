@@ -8,6 +8,9 @@
             border-collapse: collapse;
             border-spacing: 0;
             margin: 0px auto;
+            white-space: nowrap;
+            table-layout: fixed;
+            width: 100%;
         }
 
         .tg td {
@@ -55,29 +58,58 @@
             margin: 20px;
             text-align: center;
         }
+
+        #content {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: 30%;
+        }
+
+        #title {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: 30%;
+        }
     </style>
 </head>
 <body>
+<div>
+    <form action="/" method="get">
+        <select name="writer">
+            <option value="전체보기">전체보기</option>
+            <option th:each="writer : ${writers}"
+                    th:value="${writer}"
+                    th:text="${writer}">option
+            </option>
+        </select>
+        <input type="submit" value="검색">
+    </form>
+
+    <form action="/" method="get">
+        <input type="text" name="keyword" placeholder="제목 키워드를 입력해주세요.">
+        <input type="submit" value="검색">
+    </form>
+</div>
 <table class="tg">
     <thead>
     <tr>
-        <th class="tg-9wq8">#</th>
-        <th class="tg-0pky">작성자</th>
-        <th class="tg-9wq8">제목</th>
-        <th class="tg-0pky">내용</th>
-        <th class="tg-9wq8">조회수</th>
-        <th class="tg-9wq8">작성시간</th>
-        <th class="tg-0pky">수정시간</th>
+        <th class="tg-9wq8" width="5%">#</th>
+        <th class="tg-0pky" width="10%">작성자</th>
+        <th class="tg-9wq8" width="15%">제목</th>
+        <th class="tg-0pky" width="30%">내용</th>
+        <th class="tg-9wq8" width="5%">조회수</th>
+        <th class="tg-9wq8" width="15%">작성시간</th>
+        <th class="tg-0pky" width="15%">수정시간</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="content : ${contents}">
         <td class="tg-c3ow" th:text="${content.getId()}"></td>
         <td class="tg-0pky" th:text="${content.getWriter()}"></td>
-        <td class="tg-c3ow">
+        <td class="tg-c3ow" id="title">
             <a href="#" th:href="@{/detail/(id=${content.getId()})}" th:text="${content.getTitle()}"></a>
         </td>
-        <td class="tg-0pky">
+        <td class="tg-0pky" id="content">
             <a href="#" th:href="@{/detail/(id=${content.getId()})}" th:text="${content.getContents()}"></a>
         </td>
         <td class="tg-c3ow" th:text="${content.getViews()}"></td>

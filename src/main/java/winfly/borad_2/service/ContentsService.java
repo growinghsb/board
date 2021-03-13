@@ -33,18 +33,7 @@ public class ContentsService {
     }
 
     public List<ContentsDto> findAll() {
-        List<Contents> contents = repository.findAll();
-        List<ContentsDto> contentsDto = new ArrayList<>();
-        for (Contents content : contents) {
-            contentsDto.add(new ContentsDto(content.getId()
-                    , content.getWriter()
-                    , content.getTitle()
-                    , content.getContents()
-                    , content.getWriteTime()
-                    , content.getModifyTime()
-                    , content.getViews()));
-        }
-        return contentsDto;
+        return getContentsDtos(repository.findAll());
     }
 
     public void revise(ContentsDto dto) {
@@ -57,6 +46,32 @@ public class ContentsService {
 
     public void viewsUp(Long id) {
         Contents.viewsUp(repository.findOne(id));
+    }
+
+    public List<String> findAllWriter() {
+        return repository.findAllWriter();
+    }
+
+    public List<ContentsDto> keywordSearch(String keyword) {
+        return getContentsDtos(repository.keywordSearch(keyword));
+    }
+
+    public List<ContentsDto> writerSearch(String writer) {
+        return getContentsDtos(repository.writerSearch(writer));
+    }
+
+    private List<ContentsDto> getContentsDtos(List<Contents> contents) {
+        List<ContentsDto> contentsDtos = new ArrayList<>();
+        for (Contents content : contents) {
+            contentsDtos.add(new ContentsDto(content.getId()
+                    , content.getWriter()
+                    , content.getTitle()
+                    , content.getContents()
+                    , content.getWriteTime()
+                    , content.getModifyTime()
+                    , content.getViews()));
+        }
+        return contentsDtos;
     }
 }
 

@@ -34,4 +34,25 @@ public class ContentsJpaRepository implements ContentsRepository {
     public void delete(Contents contents) {
         em.remove(contents);
     }
+
+    @Override
+    public List<Contents> writerSearch(String writer) {
+        return em.createQuery("select c from Contents c where c.writer = :writer", Contents.class)
+                .setParameter("writer", writer)
+                .getResultList();
+    }
+
+    @Override
+    public List<String> findAllWriter() {
+        return em.createQuery("select distinct c.writer from Contents c order by c.writer asc", String.class)
+                .getResultList();
+    }
+
+    @Override
+    public List<Contents> keywordSearch(String keyword) {
+        return em.createQuery("select c from Contents c where c.title like :keyword", Contents.class)
+                .setParameter("keyword", "%" + keyword + "%")
+                .getResultList();
+    }
+
 }

@@ -15,5 +15,12 @@ public interface ContentsRepository {
 
     void delete(Contents contents);
 
+    List<Contents> writerSearch(String writer);
+
+    List<String> findAllWriter();
+
+    List<Contents> keywordSearch(String keyword);
+
+
     //검색과 페이징은 추후에 추가하자.
 }
