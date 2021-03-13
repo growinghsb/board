@@ -68,7 +68,13 @@
         #title {
             text-overflow: ellipsis;
             white-space: nowrap;
-            max-width: 30%;
+            max-width: 15%;
+        }
+
+        #writer {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: 10%;
         }
     </style>
 </head>
@@ -105,7 +111,7 @@
     <tbody>
     <tr th:each="content : ${contents}">
         <td class="tg-c3ow" th:text="${content.getId()}"></td>
-        <td class="tg-0pky" th:text="${content.getWriter()}"></td>
+        <td class="tg-0pky" id="writer" th:text="${content.getWriter()}"></td>
         <td class="tg-c3ow" id="title">
             <a href="#" th:href="@{/detail/(id=${content.getId()})}" th:text="${content.getTitle()}"></a>
         </td>
@@ -121,6 +127,11 @@
     </tr>
     </tbody>
 </table>
+<div>
+    <th:block th:each="page : ${totalDataCount}">
+        <a href="#" th:href="@{/(pageNum = ${page})}" th:text="${page}"></a>
+    </th:block>
+</div>
 <div>
     <a href="/write" role="button">글쓰기</a>
 </div>

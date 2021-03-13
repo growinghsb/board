@@ -21,15 +21,20 @@ public class ContentsController {
     @GetMapping("/")
     public String main(@RequestParam(value = "writer", required = false) String writer,
                        @RequestParam(value = "keyword", required = false) String keyword,
+                       @RequestParam(value = "pageNum", required = false) Integer pageNum,
                        Model model) {
-        model.addAttribute("contents", parameterHandler(writer, keyword));
+        model.addAttribute("contents", parameterHandler(writer, keyword, pageNum));
         model.addAttribute("writers", service.findAllWriter());
+        model.addAttribute("totalDataCount", service.dataTotalCount());
         return "main";
     }
 
-    public List<ContentsDto> parameterHandler(String writer, String keyword) {
+    public List<ContentsDto> parameterHandler(String writer, String keyword, Integer pageNum) {
+        if (pageNum == null) {
+            pageNum = 1;
+        }
         if (writer != null && writer.equals("전체보기")) {
-            return service.findAll();
+            return service.findAllPagination(pageNum);
         }
 
         if (writer != null) {
@@ -39,7 +44,7 @@ public class ContentsController {
         if (keyword != null) {
             return service.keywordSearch(keyword);
         }
-        return service.findAll();
+        return service.findAllPagination(pageNum);
     }
 
 

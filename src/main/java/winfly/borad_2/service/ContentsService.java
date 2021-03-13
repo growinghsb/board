@@ -8,6 +8,7 @@ import winfly.borad_2.domain.Contents;
 import winfly.borad_2.repository.ContentsRepository;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -31,9 +32,21 @@ public class ContentsService {
         Contents contents = repository.findOne(id);
         return new ContentsDto(contents.getId(), contents.getWriter(), contents.getTitle(), contents.getContents());
     }
-
     public List<ContentsDto> findAll() {
         return getContentsDtos(repository.findAll());
+    }
+
+    public List<ContentsDto> findAllPagination(Integer pageNum) {
+        return getContentsDtos(repository.paging(pageNum));
+    }
+
+    public List<Integer> dataTotalCount() {
+        Long result = (repository.dataCounting() / 5) + 1L;
+        List<Integer> pageNum = new ArrayList<>();
+        for (int i = 0; i < result; i++) {
+            pageNum.add(i + 1);
+        }
+        return pageNum;
     }
 
     public void revise(ContentsDto dto) {

@@ -149,13 +149,7 @@ class ContentsServiceTest {
     @Test
     public void 키워드_검색_테스트() {
         //given
-        service.save(new ContentsDto("한승범", "테스트1", "테스트 내용"));
-        service.save(new ContentsDto("한승범", "테스트1", "테스트 내용"));
-        service.save(new ContentsDto("김승범", "테스트2", "테스트 내용"));
-        service.save(new ContentsDto("윤승범", "테스트2", "테스트 내용"));
-        service.save(new ContentsDto("윤승범", "테스트2", "테스트 내용"));
-        service.save(new ContentsDto("윤승범", "테스트3", "테스트 내용 이건 좀 다름"));
-        service.save(new ContentsDto("윤승범", "테스트3", "테스트 내용"));
+        manySave();
 
 
         //when
@@ -169,9 +163,53 @@ class ContentsServiceTest {
         assertThat(테스트2.size()).isNotZero();
         assertThat(테스트2.size()).isEqualTo(3);
         assertThat(테스트3.get(0).getContents()).isEqualTo("테스트 내용 이건 좀 다름");
+        
+    }
+    
+    @Test
+    public void 페이징_테스트() {
+        //given
+        manySave();
+        
+        //when
+        List<ContentsDto> 테스트1 = service.findAllPagination(1);
+        List<ContentsDto> 테스트2 = service.findAllPagination(2);
+        
+        //than
+        assertThat(테스트1).isNotNull();
+        assertThat(테스트1).isNotEmpty();
+        assertThat(테스트1.size()).isEqualTo(5);
+        assertThat(테스트2.size()).isEqualTo(2);
+        assertThat(테스트1.size() + 테스트2.size()).isEqualTo(7);
 
+    
+    }
+
+    @Test
+    public void 출력할_페이지_번호_테스트() {
+        //given
+        manySave();
+
+        //when
+        List<Integer> result = service.dataTotalCount();
+
+        //than
+        assertThat(result).isNotNull();
+        assertThat(result.size()).isEqualTo(2);
 
     }
+
+    private void manySave() {
+        service.save(new ContentsDto("한승범", "테스트1", "테스트 내용"));
+        service.save(new ContentsDto("한승범", "테스트1", "테스트 내용"));
+        service.save(new ContentsDto("김승범", "테스트2", "테스트 내용"));
+        service.save(new ContentsDto("윤승범", "테스트2", "테스트 내용"));
+        service.save(new ContentsDto("윤승범", "테스트2", "테스트 내용"));
+        service.save(new ContentsDto("윤승범", "테스트3", "테스트 내용 이건 좀 다름"));
+        service.save(new ContentsDto("윤승범", "테스트3", "테스트 내용"));
+    }
+
+
 
     private Long saveContent() {
         Long id = service.save(new ContentsDto("한승범", "테스트", "테스트 내용"));

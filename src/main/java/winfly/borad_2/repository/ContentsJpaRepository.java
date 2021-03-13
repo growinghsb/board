@@ -1,5 +1,7 @@
 package winfly.borad_2.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import winfly.borad_2.domain.Contents;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -55,4 +57,16 @@ public class ContentsJpaRepository implements ContentsRepository {
                 .getResultList();
     }
 
+    @Override
+    public List<Contents> paging(int pageNum) {
+        return em.createQuery("select c from Contents c order by c.id asc", Contents.class)
+                .setFirstResult((pageNum - 1) * 5)
+                .setMaxResults(5)
+                .getResultList();
+    }
+
+    @Override
+    public Long dataCounting() {
+        return em.createQuery("select count(c) from Contents c", Long.class).getSingleResult();
+    }
 }

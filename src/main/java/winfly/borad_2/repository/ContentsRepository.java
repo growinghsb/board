@@ -1,6 +1,8 @@
 package winfly.borad_2.repository;
 
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import winfly.borad_2.domain.Contents;
 
 import java.util.List;
@@ -20,6 +22,10 @@ public interface ContentsRepository {
     List<String> findAllWriter();
 
     List<Contents> keywordSearch(String keyword);
+
+    List<Contents> paging(int pageNum);
+
+    Long dataCounting();
 
 
     //검색과 페이징은 추후에 추가하자.
